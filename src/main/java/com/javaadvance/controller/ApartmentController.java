@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("Apartment")
+@RequestMapping("/apartment")
 public class ApartmentController {
 
     public List<Apartment> apartmentList = new ArrayList<>();
@@ -37,7 +37,7 @@ public class ApartmentController {
     }
 
 
-    @PatchMapping("{id}")
+    @PutMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Apartment replaceApartment(@PathVariable int id, @RequestBody Apartment apartment) {
         final Optional<Apartment> chosenApartment = apartmentList.stream()

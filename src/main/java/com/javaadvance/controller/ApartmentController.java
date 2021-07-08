@@ -2,16 +2,15 @@ package com.javaadvance.controller;
 
 import com.javaadvance.entity.Apartment;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
+@RequestMapping("Apartment")
 public class ApartmentController {
 
     public List<Apartment> apartmentList = new ArrayList<>();
@@ -24,13 +23,13 @@ public class ApartmentController {
 
     }
 
-    @RequestMapping(value = "/apartment")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Apartment> getApartmentList(){
         return apartmentList;
     }
 
-    @RequestMapping(value = "/apartment")
+    @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Apartment addApartment(@RequestBody Apartment apartment){
         this.apartmentList.add(apartment);
@@ -38,7 +37,7 @@ public class ApartmentController {
     }
 
 
-    @RequestMapping(value = "/apartment/{id}")
+    @PatchMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Apartment replaceApartment(@PathVariable int id, @RequestBody Apartment apartment) {
         final Optional<Apartment> chosenApartment = apartmentList.stream()
@@ -52,7 +51,8 @@ public class ApartmentController {
 
     }
 
-    @RequestMapping(value = "/apartment/{id}")
+    @DeleteMapping( "{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
    public void deleteApartment(@PathVariable int id) {
         apartmentList.removeIf(apartment -> apartment.getId() ==id);
    }

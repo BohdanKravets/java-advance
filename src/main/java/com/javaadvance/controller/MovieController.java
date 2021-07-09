@@ -44,7 +44,7 @@ public class MovieController {
         final int indexOfMovie = movies.indexOf(movieInList);
         movie.setId(id);
         movies.set(indexOfMovie,movie);
-        return movie;
+        return  movie;
     }
 
     @DeleteMapping(value = "movie/{id}")

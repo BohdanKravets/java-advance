@@ -2,20 +2,23 @@ package com.javaadvance.controller;
 
 import com.javaadvance.entity.Movie;
 import com.javaadvance.service.MovieService;
-import lombok.RequiredArgsConstructor;
+import com.validator.MovieValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-
 public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    //    @RequestMapping(value = "/movie", method = RequestMethod.GET)
+
+
+
     @GetMapping(value = "/movie")
     public List<Movie> getMovies() {
         return movieService.getAllMovies();
@@ -23,22 +26,13 @@ public class MovieController {
 
     @PostMapping(value = "/movie")
     @ResponseStatus(HttpStatus.CREATED)
-    public Movie insertMovie(@RequestBody Movie movie) {
+    public Movie insertMovie(@RequestBody @Valid Movie movie) {
         return movieService.createMovie(movie);
     }
 
     @PutMapping(value = "/movie/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Movie updateMovie(@PathVariable int id, @RequestBody Movie movie) {
-//        final Optional<Movie> first = movies
-//                .stream()
-//                .filter(m -> m.getId() == id)
-//                .findFirst();
-//        final Movie movieInList = first
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No movie found"));
-//        final int indexOfMovie = movies.indexOf(movieInList);
-//        movie.setId(id);
-//        movies.set(indexOfMovie,movie);
+    public Movie updateMovie(@PathVariable int id, @RequestBody @Valid Movie movie) {
         return movieService.updateMovie(id, movie);
     }
 
@@ -46,5 +40,11 @@ public class MovieController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMovie(@PathVariable int id) {
         movieService.deleteMovie(id);
+    }
+
+
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        dataBinder.addValidators(new MovieValidator());
     }
 }

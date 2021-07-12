@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +18,9 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false,length = 100)
+    @NotBlank
     private String title;
+    @Positive
     private int duration;
 
 

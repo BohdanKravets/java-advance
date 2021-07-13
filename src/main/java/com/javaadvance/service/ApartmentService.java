@@ -14,4 +14,6 @@ public interface ApartmentService {
     Apartment updateApartment(int id, Apartment apartment);
 
     void deleteApartment(int id);
+
+    Apartment getApartmentById(int id);
 }

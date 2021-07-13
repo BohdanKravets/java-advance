@@ -16,11 +16,12 @@ public class ApartmentValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-Apartment apartment = (Apartment) o;
-if( StringUtils.isNotBlank(apartment.getAddress()) &&
-        !CharUtils.isAsciiAlphaUpper(apartment.getAddress().charAt(0))) {
-    errors.rejectValue("address","apartment.address.capital-letter",
-            "Movie title should start with capital letter");
-}
+        Apartment apartment = (Apartment) o;
+        if (StringUtils.isNotBlank(apartment.getAddress())) {
+            if (!StringUtils.isAlpha(apartment.getAddress())) {
+                errors.rejectValue("address", "apartment.address.only-letters",
+                        "Address should contain only letters");
+            }
+        }
     }
 }

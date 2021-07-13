@@ -23,6 +23,11 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
+    public Apartment getApartmentById(int id) {
+        return apartmentDao.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.OK));
+    }
+
+    @Override
     public Apartment addApartment(Apartment apartment) {
         if(!CharUtils.isAsciiAlphaUpper(apartment.getAddress().charAt(0))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"should start with capital letter");
@@ -47,4 +52,6 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
        apartmentDao.deleteById(id);
     }
+
+
 }

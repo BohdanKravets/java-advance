@@ -25,6 +25,11 @@ public class ApartmentController {
         return apartmentService.getAllApartments();
     }
 
+    @GetMapping("/{id}")
+    public Apartment getApartmentById(@PathVariable int id){
+        return apartmentService.getApartmentById(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Apartment addApartment(@RequestBody @Valid Apartment apartment) {
@@ -35,12 +40,6 @@ public class ApartmentController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Apartment replaceApartment(@PathVariable int id, @RequestBody @Valid Apartment apartment) {
-//        final Optional<Apartment> chosenApartment = apartmentList.stream()
-//                .filter(a -> a.getId() == id)
-//                .findFirst();
-//        final Apartment apartmentToReplace = chosenApartment.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//        final int apartmentIndex = apartmentList.indexOf(apartmentToReplace);
-//        apartmentList.set(apartmentIndex, apartment);
 
         return apartmentService.updateApartment(id, apartment);
 
@@ -52,9 +51,10 @@ public class ApartmentController {
         apartmentService.deleteApartment(id);
     }
 
-//    @InitBinder
-//    public void initBinder(WebDataBinder dataBinder) {
-//        dataBinder.addValidators(apartmentValidator);
-//    }
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        dataBinder.addValidators(apartmentValidator);
+
+    }
 
 }

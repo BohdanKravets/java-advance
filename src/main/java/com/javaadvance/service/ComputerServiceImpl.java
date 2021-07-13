@@ -10,7 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
-public class ComputerServiceImpl implements ComputerService{
+public class ComputerServiceImpl implements ComputerService {
     @Autowired
     ComputerDao computerDao;
 
@@ -21,7 +21,7 @@ public class ComputerServiceImpl implements ComputerService{
 
     @Override
     public Computer getById(int id) {
-        return computerDao.getById(id);
+        return computerDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Override
@@ -33,16 +33,16 @@ public class ComputerServiceImpl implements ComputerService{
     @Override
     public Computer replaceComputer(int id, Computer computer) {
         computer.setId(id);
-        if(!computerDao.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Computer with such id isn't found");
+        if (!computerDao.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer with such id isn't found");
         }
         return computerDao.saveAndFlush(computer);
     }
 
     @Override
     public void deleteComputer(int id) {
-        if(!computerDao.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Computer with such id isn't found");
+        if (!computerDao.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer with such id isn't found");
         }
         computerDao.deleteById(id);
     }

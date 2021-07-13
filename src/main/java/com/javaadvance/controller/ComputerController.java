@@ -29,9 +29,7 @@ public class ComputerController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Computer getById(@PathVariable int id){
-        final Computer byId = computerService.getById(id);
-        System.out.println(byId);
-        return byId;
+        return computerService.getById(id);
     }
 
     @PostMapping

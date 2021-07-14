@@ -21,7 +21,7 @@ public class ApartmentController {
     @Autowired
     private ApartmentValidator apartmentValidator;
 
-//    private static final Logger LOGGER = LoggerFactory.getLogger("")
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApartmentController.class);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -31,13 +31,14 @@ public class ApartmentController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Apartment getApartmentById(@PathVariable int id){
+    public Apartment getApartmentById(@PathVariable int id) {
         return apartmentService.getApartmentById(id);
     }
 
     @GetMapping("/address/{address}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Apartment> getApartmentsByAddress(@PathVariable String address){
+    public List<Apartment> getApartmentsByAddress(@PathVariable String address) {
+        LOGGER.info("Handling GET request with address {}", address);
         return apartmentService.getApartmentsByAddress(address);
     }
 

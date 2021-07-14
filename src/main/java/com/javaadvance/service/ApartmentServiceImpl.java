@@ -24,7 +24,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     @Override
     public Apartment getApartmentById(int id) {
-        return apartmentDao.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.OK));
+        return apartmentDao.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Override

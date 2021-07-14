@@ -28,6 +28,11 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
+    public List<Apartment> getApartmentsByAddress(String address) {
+        return apartmentDao.findByAddress(address);
+    }
+
+    @Override
     public Apartment addApartment(Apartment apartment) {
         if(!CharUtils.isAsciiAlphaUpper(apartment.getAddress().charAt(0))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"should start with capital letter");

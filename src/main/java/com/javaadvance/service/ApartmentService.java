@@ -16,4 +16,6 @@ public interface ApartmentService {
     void deleteApartment(int id);
 
     Apartment getApartmentById(int id);
+
+    List<Apartment> getApartmentsByAddress(String address);
 }

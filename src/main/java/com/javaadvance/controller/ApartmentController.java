@@ -3,6 +3,8 @@ package com.javaadvance.controller;
 import com.javaadvance.entity.Apartment;
 import com.javaadvance.service.ApartmentService;
 import com.javaadvance.validator.ApartmentValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,6 +21,8 @@ public class ApartmentController {
     @Autowired
     private ApartmentValidator apartmentValidator;
 
+//    private static final Logger LOGGER = LoggerFactory.getLogger("")
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Apartment> getApartmentList() {
@@ -26,8 +30,15 @@ public class ApartmentController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Apartment getApartmentById(@PathVariable int id){
         return apartmentService.getApartmentById(id);
+    }
+
+    @GetMapping("/address/{address}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Apartment> getApartmentsByAddress(@PathVariable String address){
+        return apartmentService.getApartmentsByAddress(address);
     }
 
     @PostMapping

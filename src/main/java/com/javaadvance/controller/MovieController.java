@@ -3,17 +3,15 @@ package com.javaadvance.controller;
 import com.javaadvance.dto.MoviePage;
 import com.javaadvance.entity.Movie;
 import com.javaadvance.service.MovieService;
-import com.validator.MovieValidator;
+import com.javaadvance.validator.MovieValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/movie")

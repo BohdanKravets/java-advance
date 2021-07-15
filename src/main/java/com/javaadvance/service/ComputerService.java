@@ -1,12 +1,14 @@
 package com.javaadvance.service;
 
+import com.javaadvance.dto.ComputerPage;
 import com.javaadvance.entity.Computer;
+import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface ComputerService {
-    List<Computer> getAll();
+    ComputerPage getAll(int page, int size);
 
     Computer getById(int id);
 

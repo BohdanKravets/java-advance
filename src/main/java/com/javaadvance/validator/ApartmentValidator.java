@@ -1,7 +1,6 @@
 package com.javaadvance.validator;
 
 import com.javaadvance.entity.Apartment;
-import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class MoviePage {
-    private List<Movie> movies;
+    private List<MovieDto> movies;
     private long totalElements;
     private boolean last;
     private int currentPage;

@@ -1,5 +1,6 @@
 package com.javaadvance.controller;
 
+import com.javaadvance.dto.MovieDto;
 import com.javaadvance.dto.MoviePage;
 import com.javaadvance.entity.Movie;
 import com.javaadvance.service.MovieService;
@@ -25,25 +26,25 @@ public class MovieController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public MoviePage getMovies(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+    public MoviePage getMovies(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "8") int size) {
         return movieService.getAllMovies(page, size);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Movie getMovieById(@PathVariable int id ) {
+    public MovieDto getMovieById(@PathVariable int id ) {
         return movieService.getMovieById(id);
     }
 
     @GetMapping("/title/{title}")
     @ResponseStatus(HttpStatus.OK)
-    public Movie getMovieByTitle(@PathVariable String title) {
+    public MovieDto getMovieByTitle(@PathVariable String title) {
         return movieService.getMovieByTitle(title);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Movie insertMovie(@RequestBody @Valid Movie movie) {
+    public MovieDto insertMovie(@RequestBody @Valid MovieDto movie) {
         LOG.info("Handling Post request for object {}",movie);
         return movieService.createMovie(movie);
     }
@@ -51,7 +52,7 @@ public class MovieController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Movie updateMovie(@PathVariable int id, @RequestBody @Valid Movie movie) {
+    public Movie updateMovie(@PathVariable int id, @RequestBody @Valid MovieDto movie) {
         return movieService.updateMovie(id, movie);
     }
 

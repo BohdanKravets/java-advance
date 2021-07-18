@@ -2,7 +2,6 @@ package com.javaadvance.controller;
 
 import com.javaadvance.dto.ApartmentDto;
 import com.javaadvance.dto.ApartmentPage;
-import com.javaadvance.entity.Apartment;
 import com.javaadvance.service.ApartmentService;
 import com.javaadvance.validator.ApartmentValidator;
 import org.slf4j.Logger;
@@ -37,7 +36,7 @@ public class ApartmentController {
     @ResponseStatus(HttpStatus.OK)
     public ApartmentDto getApartmentById(@PathVariable int id) {
         LOGGER.info("Handling GET request with apartment id {}", id);
-        return apartmentService.getApartmentById(id);
+        return apartmentService.getApartmentDtoById(id);
     }
 
     @GetMapping("/address/{address}")

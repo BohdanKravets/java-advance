@@ -1,8 +1,6 @@
 package com.javaadvance.service;
 
-import com.javaadvance.dao.ApartmentDao;
 import com.javaadvance.dao.UserDao;
-import com.javaadvance.dto.ApartmentDto;
 import com.javaadvance.dto.UserDto;
 import com.javaadvance.entity.Apartment;
 import com.javaadvance.entity.User;
@@ -11,13 +9,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
-    private ApartmentDao apartmentDao;
+    private ApartmentService apartmentService;
 
     @Override
     public UserDto addUser(UserDto user) {
@@ -27,7 +24,7 @@ public class UserServiceImpl implements UserService {
         userDB.setBirthDate(user.getBirthDate());
         userDB.setName(user.getName());
         final List<Apartment> apartmentsDB = user.getApartmentIds().stream()
-                .map(id -> apartmentDao.findById(id).orElseThrow(() -> new ItemNotFoundException("user", id)))
+                .map(id -> apartmentService.getApartmentById(id))
                 .collect(Collectors.toList());
         userDB.setApartmentList(apartmentsDB);
         userDao.saveAndFlush(userDB);
@@ -44,7 +41,7 @@ public class UserServiceImpl implements UserService {
         userDB.setBirthDate(user.getBirthDate());
         userDB.setName(user.getName());
         final List<Apartment> apartmentsDB = user.getApartmentIds().stream()
-                .map(idn -> apartmentDao.findById(idn).orElseThrow(() -> new ItemNotFoundException("user", idn)))
+                .map(idn -> apartmentService.getApartmentById(idn))
                 .collect(Collectors.toList());
         userDB.setApartmentList(apartmentsDB);
         userDao.saveAndFlush(userDB);
@@ -57,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(int id) {
+    public UserDto getUserDtoById(int id) {
         final Optional<User> chosenUser = userDao.findById(id);
         Optional<UserDto> chosenUserDto = Optional.of(new UserDto());
         chosenUserDto.get().setId(chosenUser.get().getId());
@@ -70,5 +67,11 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList()));
 
         return chosenUserDto.orElseThrow(() -> new ItemNotFoundException("User", id));
+    }
+
+    public User getUserById(int id) {
+
+
+        return userDao.findById(id).orElseThrow(() -> new ItemNotFoundException("User", id));
     }
 }

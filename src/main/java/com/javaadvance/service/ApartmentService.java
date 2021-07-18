@@ -17,7 +17,9 @@ public interface ApartmentService {
 
     void deleteApartment(int id);
 
-    ApartmentDto getApartmentById(int id);
+    ApartmentDto getApartmentDtoById(int id);
 
     List<ApartmentDto> getApartmentsByAddress(String address);
+
+    Apartment getApartmentById(int id);
 }

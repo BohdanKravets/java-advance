@@ -2,7 +2,6 @@ package com.javaadvance.controller;
 
 import com.javaadvance.dto.MovieDto;
 import com.javaadvance.dto.MoviePage;
-import com.javaadvance.entity.Movie;
 import com.javaadvance.service.MovieService;
 import com.javaadvance.validator.MovieValidator;
 import org.slf4j.Logger;
@@ -52,7 +51,7 @@ public class MovieController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Movie updateMovie(@PathVariable int id, @RequestBody @Valid MovieDto movie) {
+    public MovieDto updateMovie(@PathVariable int id, @RequestBody @Valid MovieDto movie) {
         return movieService.updateMovie(id, movie);
     }
 

@@ -5,27 +5,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
-
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-//@ToString(exclude = "user")
+
 @Entity
-public class Car {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String brand;
-    private double engineVolume;
-    private String color;
+    private String name;
+    private int age;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    @JsonIgnore
-    private User User;
+    @OneToMany
+@JsonIgnore
+    private List<Car> cars;
+
 }

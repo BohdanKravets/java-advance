@@ -24,6 +24,11 @@ public class CarController {
         return carService.getAll();
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Car getById(@PathVariable int id){
+        return carService.getById(id);
+    };
 
 
     @PutMapping("/{id}")

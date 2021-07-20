@@ -90,10 +90,11 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         carDao.saveAndFlush(car);
 //        car.setId(user.getCars().size());
-        car.setUser(user);
+//        car.setUser(user);
+        user.getCars().add(car);
         userDao.saveAndFlush(user);
 //        car.setUser(user);
-//        user.getCars().add(car);
+
         return user;
     }
 }

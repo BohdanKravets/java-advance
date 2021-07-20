@@ -25,6 +25,6 @@ public class Car {
     private String color;
 
     @ManyToOne
-@JsonIgnore
+    @JsonIgnore
     private User user;
 }

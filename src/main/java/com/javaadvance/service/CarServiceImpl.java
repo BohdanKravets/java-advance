@@ -3,13 +3,13 @@ package com.javaadvance.service;
 import com.javaadvance.dao.CarDao;
 import com.javaadvance.dto.CarDto;
 import com.javaadvance.entity.Car;
+import com.javaadvance.exceptions.ItemNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,23 +39,27 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public CarDto replaceCar(int id, CarDto car) {
+
         car.setId(id);
-        final Car carDB = carDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        final Car carDB = carDao.findById(id).orElseThrow(() -> new ItemNotFoundException("car",id));
         carDB.setBrand(car.getBrand());
         carDB.setColor(car.getColor());
         carDB.setEngineVolume(car.getEngineVolume());
-        carDB.setUser(userService.getById(car.getUserId()));
+        carDB.setUser(userService.getById(car.getUserId()));//??
         carDao.saveAndFlush(carDB);
         return car;
     }
 
     @Override
     public void removeCar(int id) {
-carDao.deleteById(id);
+        if(!carDao.existsById(id)){
+            throw new ItemNotFoundException("car",id);
+        }
+        carDao.deleteById(id);
     }
 
     public Car getById(int id){
-        return carDao.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found"));
+        return carDao.findById(id).orElseThrow(()-> new ItemNotFoundException("car",id));
 
     }
 }

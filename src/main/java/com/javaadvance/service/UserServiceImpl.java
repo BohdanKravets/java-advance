@@ -5,6 +5,7 @@ import com.javaadvance.dao.UserDao;
 import com.javaadvance.dto.UserDto;
 import com.javaadvance.entity.Car;
 import com.javaadvance.entity.User;
+import com.javaadvance.exceptions.ItemNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto replaceUser(int id, UserDto user) {
+        if(!userDao.existsById(id)){
+                throw new ItemNotFoundException("user",id);
+            }
+
+
         user.setId(id);
         User userDB = new User();
         userDB.setId(id);
@@ -77,17 +83,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void removeUser(int id) {
+        if(!userDao.existsById(id)){
+            throw new ItemNotFoundException("user",id);
+        }
         userDao.deleteById(id);
     }
 
     public User getById(int id) {
-        return userDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return userDao.findById(id).orElseThrow(() -> new ItemNotFoundException("user",id));
 
     }
 
     @Override
     public User addCarByUserId(int id, Car car) {
-        User user = userDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User user = userDao.findById(id).orElseThrow(() -> new ItemNotFoundException("user",id));
         carDao.saveAndFlush(car);
 //        car.setId(user.getCars().size());
 //        car.setUser(user);

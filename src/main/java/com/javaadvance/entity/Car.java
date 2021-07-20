@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-//@ToString(exclude = "user")
+@ToString(exclude = "user")
 @Entity
 public class Car {
     @Id
@@ -25,7 +25,6 @@ public class Car {
     private String color;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    @JsonIgnore
-    private User User;
+@JsonIgnore
+    private User user;
 }

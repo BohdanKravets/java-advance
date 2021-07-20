@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,8 +40,7 @@ public class CarServiceImpl implements CarService{
     @Override
     public CarDto replaceCar(int id, CarDto car) {
         car.setId(id);
-        Car carDB = new Car();
-        carDB.setId(car.getId());
+        final Car carDB = carDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         carDB.setBrand(car.getBrand());
         carDB.setColor(car.getColor());
         carDB.setEngineVolume(car.getEngineVolume());
@@ -55,7 +55,7 @@ carDao.deleteById(id);
     }
 
     public Car getById(int id){
-        return carDao.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return carDao.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found"));
 
     }
 }

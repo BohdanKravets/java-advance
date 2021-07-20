@@ -21,8 +21,8 @@ public class User {
     private String name;
     private int age;
 
-    @OneToMany
-@JsonIgnore
+    @OneToMany(targetEntity = Car.class)
+    @JoinColumn(name = "user_id")
     private List<Car> cars;
 
 }

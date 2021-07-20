@@ -26,7 +26,7 @@ public class CarController {
 
 
 
-    @PutMapping("/{id}/")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public CarDto replaceCar(@PathVariable int id, @RequestBody CarDto car) {
         return carService.replaceCar(id, car);

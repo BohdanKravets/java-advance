@@ -2,6 +2,7 @@ package com.javaadvance.controller;
 
 import com.javaadvance.dto.UserDto;
 import com.javaadvance.entity.Car;
+import com.javaadvance.entity.User;
 import com.javaadvance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,12 @@ public class UserController {
         return userService.getAll();
     }
 
+    @GetMapping({"/{id}"})
+    @ResponseStatus(HttpStatus.OK)
+    public User getUserById(@PathVariable int id) {
+        return userService.getById(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto addUser(@RequestBody UserDto user) {
@@ -40,8 +47,10 @@ public class UserController {
     public void deleteUser(@PathVariable int id) {
         userService.removeUser(id);
     }
-    @PostMapping("/{id}/cars")
-    public void addCarByUserId(@PathVariable int id, @RequestBody Car car){
-        userService.addCarByUserId(id,car);
+
+    @PostMapping("/{id}/car")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User addCarByUserId(@PathVariable int id, @RequestBody Car car){
+      return  userService.addCarByUserId(id,car);
     }
 }

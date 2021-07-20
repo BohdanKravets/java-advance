@@ -18,5 +18,5 @@ public interface UserService {
 
     User getById(int id);
 
-    void addCarByUserId(int id, Car car);
+    User addCarByUserId(int id, Car car);
 }

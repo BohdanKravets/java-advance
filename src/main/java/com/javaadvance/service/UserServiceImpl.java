@@ -1,5 +1,6 @@
 package com.javaadvance.service;
 
+import com.javaadvance.dao.CarDao;
 import com.javaadvance.dao.UserDao;
 import com.javaadvance.dto.UserDto;
 import com.javaadvance.entity.Car;
@@ -17,7 +18,10 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
     private CarService carService;
+    @Autowired
+    private CarDao carDao;
 
 
     @Override
@@ -45,7 +49,7 @@ public class UserServiceImpl implements UserService {
     public UserDto addUser(UserDto user) {
         User userDB = new User();
         userDB.setName(user.getName());
-        userDB.setAge(user.getId());
+        userDB.setAge(user.getAge());
         userDB.setCars(new ArrayList<>());
         userDao.saveAndFlush(userDB);
         user.setId(userDB.getId());
@@ -58,9 +62,12 @@ public class UserServiceImpl implements UserService {
         User userDB = new User();
         userDB.setId(id);
         userDB.setName(user.getName());
-        userDB.setAge(user.getId());
+        userDB.setAge(user.getAge());
+        if (user.getCarsIds() == null) {
+            user.setCarsIds(new ArrayList<>());
+        }
         final List<Car> cars = user.getCarsIds().stream()
-                .map(idn -> carService.getById(idn))
+                .map(idn -> carService.getById(id))
                 .collect(Collectors.toList());
 
         userDB.setCars(cars);
@@ -79,8 +86,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addCarByUserId(int id, Car car) {
-        final User user = userDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        user.getCars().add(car);
+    public User addCarByUserId(int id, Car car) {
+        User user = userDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        carDao.saveAndFlush(car);
+        car.setUser(user);
+        userDao.saveAndFlush(user);
+//        car.setUser(user);
+//        user.getCars().add(car);
+        return user;
     }
 }

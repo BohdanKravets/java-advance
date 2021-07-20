@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserService {
     public User addCarByUserId(int id, Car car) {
         User user = userDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         carDao.saveAndFlush(car);
+//        car.setId(user.getCars().size());
         car.setUser(user);
         userDao.saveAndFlush(user);
 //        car.setUser(user);

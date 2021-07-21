@@ -1,7 +1,6 @@
 package com.javaadvance.validator;
 
 import com.javaadvance.dto.MovieDto;
-import com.javaadvance.entity.Movie;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.Errors;

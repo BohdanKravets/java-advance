@@ -2,17 +2,19 @@ package com.javaadvance.service;
 
 import com.javaadvance.dto.MovieDto;
 import com.javaadvance.dto.MoviePage;
+import com.javaadvance.entity.Movie;
 
 public interface MovieService {
+
     MoviePage getAllMovies(int page, int size);
 
-    MovieDto createMovie( MovieDto movie);
+    MovieDto createMovie(MovieDto movie);
 
-    MovieDto updateMovie(int id, MovieDto movie);
+    Movie updateMovie(int id, Movie movie);
 
     void deleteMovie(int id);
 
-    MovieDto getMovieById(int id);
+    Movie getMovieById(int id);
 
-    MovieDto getMovieByTitle(String title);
+    Movie getMovieByTitle(String title);
 }
